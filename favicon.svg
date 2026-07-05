@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <rect width="48" height="48" rx="10" fill="#07020a"/>
+  <defs>
+    <mask id="km">
+      <rect width="48" height="48" fill="white"/>
+      <ellipse cx="19" cy="31" rx="5.5" ry="4" fill="black" transform="rotate(35 19 31)"/>
+    </mask>
+  </defs>
+  <path d="M 11 44 C 12 40 14 36 16 32"
+    fill="none" stroke="#f43f5e" stroke-width="4.5" stroke-linecap="round"
+    mask="url(#km)"/>
+  <path d="M 16 32 C 12 26 8 16 14 8 C 20 0 32 2 36 10 C 40 18 38 28 34 32 C 30 36 24 36 20 32 C 18 28 20 28 24 32 C 28 36 34 42 37 44"
+    fill="none" stroke="#f43f5e" stroke-width="4.5" stroke-linecap="round"/>
+</svg>
