@@ -147,7 +147,7 @@ export function useGameState() {
       return '🟠';
     }).join(' ');
     const solved = tripletStates.filter(t => t.solved).length;
-    return `Knot #${puzzleNumber} 🔗 ${solved}/${puzzle.triplets.length}\n${squares}\nnoodlegames.co`;
+    return `Knot #${puzzleNumber} 🔗 ${solved}/${puzzle.triplets.length}\n${squares}`;
   }, [puzzle, tripletStates, puzzleNumber]);
 
   const solvedCount = tripletStates.filter(t => t.solved).length;
