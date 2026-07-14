@@ -1,0 +1,227 @@
+.card {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+/* Each of the 3 triplets gets its own identity color for as long as it's
+   unresolved — so the board reads as three distinct puzzles, not one flat
+   surface with a single accent used everywhere. */
+.slot0 { --card-accent: var(--accent); --card-accent-hover: var(--accent-hover); --card-subtle: var(--accent-subtle); }
+.slot1 { --card-accent: var(--accent-2); --card-accent-hover: var(--accent-2-hover); --card-subtle: var(--accent-2-subtle); }
+.slot2 { --card-accent: var(--accent-3); --card-accent-hover: var(--accent-3-hover); --card-subtle: var(--accent-3-subtle); }
+
+.idle {
+  background: var(--card-subtle);
+  border-color: var(--card-subtle);
+  opacity: 0.75;
+}
+
+.selectable {
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, opacity 0.2s, transform 0.15s;
+}
+
+.selectable:hover,
+.selectable:focus-visible {
+  opacity: 0.95;
+  border-color: var(--card-accent);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.selectHint {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--card-accent);
+  opacity: 0.75;
+  letter-spacing: 0.02em;
+}
+
+.active {
+  background: var(--surface);
+  border-color: var(--card-accent);
+  box-shadow: 0 0 0 1px var(--card-subtle), var(--shadow-md);
+}
+
+.solved {
+  background: rgba(140, 170, 94, 0.06);
+  border-color: rgba(140, 170, 94, 0.35);
+}
+
+.failed {
+  background: rgba(193, 96, 60, 0.06);
+  border-color: rgba(193, 96, 60, 0.25);
+}
+
+.shaking {
+  animation: shake 0.45s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-5px); }
+  40%       { transform: translateX(5px); }
+  60%       { transform: translateX(-3px); }
+  80%       { transform: translateX(3px); }
+}
+
+/* ── Clue row ── */
+.clues {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.clue {
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-hover);
+  border-left: 2.5px solid var(--card-accent);
+  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.65rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.05em;
+}
+
+.plus {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  margin: 0 0.1rem;
+}
+
+.blank {
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  min-width: 2.5rem;
+  text-align: center;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-sm);
+}
+
+.solved .blank {
+  color: var(--correct);
+  background: rgba(140, 170, 94, 0.1);
+  border: 1px solid rgba(140, 170, 94, 0.3);
+}
+
+.failed .blank {
+  color: var(--wrong);
+  background: rgba(193, 96, 60, 0.1);
+  border: 1px solid rgba(193, 96, 60, 0.25);
+}
+
+.active .blank,
+.idle .blank {
+  color: var(--text-dim);
+  border: 1px dashed var(--border-hover);
+}
+
+/* ── Compound word reveal ── */
+.compounds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.compound {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.03em;
+}
+
+.solved .compound {
+  color: var(--correct);
+  opacity: 0.8;
+}
+
+.failed .compound {
+  color: var(--wrong);
+  opacity: 0.7;
+}
+
+/* ── Wrong guesses ── */
+.wrongGuesses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.wrongGuess {
+  font-size: 0.78rem;
+  color: var(--wrong);
+  opacity: 0.8;
+  letter-spacing: 0.03em;
+  text-decoration: line-through;
+  text-decoration-color: var(--wrong);
+}
+
+
+/* ── Input form ── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input {
+  width: 100%;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.7rem 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.input::placeholder {
+  color: var(--text-dim);
+  text-transform: none;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.input:focus {
+  border-color: var(--card-accent);
+  box-shadow: 0 0 0 3px var(--card-subtle);
+}
+
+.submitBtn {
+  background: var(--card-accent);
+  color: #241a10;
+  border-radius: var(--radius-md);
+  padding: 0.65rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: background 0.15s, transform 0.1s, opacity 0.15s;
+  letter-spacing: 0.02em;
+}
+
+.submitBtn:hover:not(:disabled) {
+  background: var(--card-accent-hover);
+  transform: translateY(-1px);
+}
+
+.submitBtn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.submitBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
