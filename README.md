@@ -17,7 +17,7 @@ Each day gives you **3 triplets**, each with 3 clue words. Type the word that co
 
 ## Sharing
 
-After finishing all three triplets you can share a result grid — one colored square per triplet showing how many guesses it took, plus a copy-to-clipboard fallback on desktop.
+After finishing all three triplets you can share a result grid — one colored square per triplet showing how many guesses it took, plus a copy-to-clipboard fallback on desktop. Once you've finished at least one NoodleGame today, a **Share all completed** button appears in the footer, letting you share every game you've solved today in one message.
 
 ---
 
