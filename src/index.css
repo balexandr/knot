@@ -86,6 +86,14 @@ body {
     linear-gradient(160deg, #26190f 0%, #100b07 100%);
   background-size: auto, auto, auto, auto, 5px 5px, auto, auto;
   background-attachment: fixed;
+  /* The two rope strands drift in opposite directions along their own
+     diagonal, one repeat-unit (34px) per loop for a seamless twist. */
+  animation: knotTwist 6s linear infinite;
+}
+
+@keyframes knotTwist {
+  from { background-position: 0 0, 0 0, 0 0,     0 0,      0 0, 0 0, 0 0; }
+  to   { background-position: 0 0, 0 0, 34px 0, -34px 0,   0 0, 0 0, 0 0; }
 }
 
 /* Slow breathing of the lamplight glow and fiber crossings */
