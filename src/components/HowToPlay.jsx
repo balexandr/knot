@@ -34,10 +34,10 @@ export default function HowToPlay({ onClose }) {
         </ul>
 
         <div className={styles.legend}>
-          <span>🔵 First try</span>
-          <span>🟣 Second try</span>
-          <span>🟤 Third try</span>
-          <span>⚫ Missed</span>
+          <span>🟢 First try</span>
+          <span>🟡 Second try</span>
+          <span>🟠 Third try</span>
+          <span>🔴 Missed</span>
         </div>
 
         <button className={styles.playBtn} onClick={onClose}>Got it — let's play</button>

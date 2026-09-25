@@ -10,7 +10,7 @@ Part of the [NoodleGames](https://noodlegames.co) family alongside **Squint** an
 
 Each day gives you **3 triplets**, each with 3 clue words. Type the word that completes all three — you get **3 guesses per triplet**, and you can work them in any order.
 
-- 🔵 First try · 🟣 Second try · 🟤 Third try · ⚫ Missed
+- 🟢 First try · 🟡 Second try · 🟠 Third try · 🔴 Missed
 - Resets daily at **midnight ET**.
 
 ---
