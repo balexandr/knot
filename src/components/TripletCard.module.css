@@ -6,7 +6,10 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  transition: border-color 0.2s, background 0.2s;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 3px 10px rgba(0, 0, 0, 0.3);
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
 }
 
 /* Each of the 3 triplets gets its own identity color for as long as it's
@@ -17,7 +20,7 @@
 .slot2 { --card-accent: var(--accent-3); --card-accent-hover: var(--accent-3-hover); --card-subtle: var(--accent-3-subtle); }
 
 .idle {
-  background: var(--card-subtle);
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.03) 0%, transparent 40%), var(--card-subtle);
   border-color: var(--card-subtle);
   opacity: 0.75;
 }
@@ -44,18 +47,18 @@
 }
 
 .active {
-  background: var(--surface);
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.06) 0%, transparent 40%), var(--surface);
   border-color: var(--card-accent);
-  box-shadow: 0 0 0 1px var(--card-subtle), var(--shadow-md);
+  box-shadow: 0 0 0 1px var(--card-subtle), inset 0 1px 0 rgba(255, 255, 255, 0.06), var(--shadow-md);
 }
 
 .solved {
-  background: rgba(140, 170, 94, 0.06);
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.05) 0%, transparent 40%), rgba(140, 170, 94, 0.06);
   border-color: rgba(140, 170, 94, 0.35);
 }
 
 .failed {
-  background: rgba(193, 96, 60, 0.06);
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.05) 0%, transparent 40%), rgba(193, 96, 60, 0.06);
   border-color: rgba(193, 96, 60, 0.25);
 }
 
@@ -80,7 +83,7 @@
 }
 
 .clue {
-  background: var(--surface-elevated);
+  background: linear-gradient(160deg, var(--surface-elevated) 0%, color-mix(in srgb, var(--surface-elevated) 78%, black) 100%);
   border: 1px solid var(--border-hover);
   border-left: 2.5px solid var(--card-accent);
   border-radius: var(--radius-sm);
@@ -89,6 +92,7 @@
   font-weight: 700;
   color: var(--text);
   letter-spacing: 0.05em;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .plus {
@@ -110,20 +114,24 @@
 
 .solved .blank {
   color: var(--correct);
-  background: rgba(140, 170, 94, 0.1);
+  background: linear-gradient(160deg, rgba(140, 170, 94, 0.2) 0%, rgba(140, 170, 94, 0.08) 100%);
   border: 1px solid rgba(140, 170, 94, 0.3);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 2px 4px rgba(0, 0, 0, 0.25);
 }
 
 .failed .blank {
   color: var(--wrong);
-  background: rgba(193, 96, 60, 0.1);
+  background: linear-gradient(160deg, rgba(193, 96, 60, 0.2) 0%, rgba(193, 96, 60, 0.08) 100%);
   border: 1px solid rgba(193, 96, 60, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 2px 4px rgba(0, 0, 0, 0.25);
 }
 
 .active .blank,
 .idle .blank {
   color: var(--text-dim);
   border: 1px dashed var(--border-hover);
+  background: rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35);
 }
 
 /* ── Compound word reveal ── */
@@ -186,6 +194,7 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   outline: none;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25);
   transition: border-color 0.15s, box-shadow 0.15s;
 }
 
@@ -198,27 +207,30 @@
 
 .input:focus {
   border-color: var(--card-accent);
-  box-shadow: 0 0 0 3px var(--card-subtle);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25), 0 0 0 3px var(--card-subtle);
 }
 
 .submitBtn {
-  background: var(--card-accent);
+  background: linear-gradient(160deg, var(--card-accent-hover) 0%, var(--card-accent) 100%);
   color: #241a10;
   border-radius: var(--radius-md);
   padding: 0.65rem;
   font-size: 0.9rem;
   font-weight: 700;
-  transition: background 0.15s, transform 0.1s, opacity 0.15s;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: background 0.15s, transform 0.1s, opacity 0.15s, box-shadow 0.15s;
   letter-spacing: 0.02em;
 }
 
 .submitBtn:hover:not(:disabled) {
-  background: var(--card-accent-hover);
+  background: linear-gradient(160deg, var(--card-accent-hover) 0%, var(--card-accent-hover) 100%);
   transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 4px 10px rgba(0, 0, 0, 0.35);
 }
 
 .submitBtn:active:not(:disabled) {
   transform: translateY(0);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .submitBtn:disabled {
