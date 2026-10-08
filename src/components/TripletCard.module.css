@@ -13,7 +13,7 @@
 }
 
 /* Each of the 3 triplets gets its own identity color for as long as it's
-   unresolved — so the board reads as three distinct puzzles, not one flat
+   unresolved, so the board reads as three distinct puzzles, not one flat
    surface with a single accent used everywhere. */
 .slot0 { --card-accent: var(--accent); --card-accent-hover: var(--accent-hover); --card-subtle: var(--accent-subtle); }
 .slot1 { --card-accent: var(--accent-2); --card-accent-hover: var(--accent-2-hover); --card-subtle: var(--accent-2-subtle); }
@@ -165,6 +165,9 @@
 }
 
 .wrongGuess {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-size: 0.78rem;
   color: var(--wrong);
   opacity: 0.8;

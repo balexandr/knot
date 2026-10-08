@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
+import { IconClose, IconCheckmark, IconShare, IconResultSquare, IconTrophy, IconThumbsUp, IconMoon } from './Icons';
 import styles from './ResultScreen.module.css';
 
-function tripletSquare(tState) {
-  if (tState.failed) return '🔴';
+function tripletSquareState(tState) {
+  if (tState.failed) return 'missed';
   const wrong = tState.guesses.length - 1;
-  if (wrong === 0) return '🟢';
-  if (wrong === 1) return '🟡';
-  return '🟠';
+  if (wrong === 0) return 'first';
+  if (wrong === 1) return 'second';
+  return 'third';
 }
 
 export default function ResultScreen({
@@ -41,7 +42,7 @@ export default function ResultScreen({
         await navigator.share({ text: shareText });
         return;
       } catch {
-        // user cancelled the share sheet, or it errored — fall through to copy
+        // user cancelled the share sheet, or it errored, fall through to copy
       }
     }
     try {
@@ -61,10 +62,12 @@ export default function ResultScreen({
   return (
     <div className={styles.overlay} onClick={onDismiss}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.closeBtn} onClick={onDismiss} aria-label="Close">✕</button>
+        <button className={styles.closeBtn} onClick={onDismiss} aria-label="Close"><IconClose /></button>
 
         <div className={styles.topSection}>
-          <div className={styles.emoji}>{won ? '🎉' : solvedCount >= 2 ? '👍' : '💭'}</div>
+          <div className={styles.emoji}>
+            {won ? <IconTrophy /> : solvedCount >= 2 ? <IconThumbsUp /> : <IconMoon />}
+          </div>
           <h2 className={styles.headline}>
             {won ? 'Untangled!' : solvedCount > 0 ? `${solvedCount}/${totalTriplets} solved` : 'Better luck tomorrow'}
           </h2>
@@ -73,7 +76,7 @@ export default function ResultScreen({
 
         <div className={styles.squares}>
           {tripletStates.map((t, i) => (
-            <span key={i} className={styles.square}>{tripletSquare(t)}</span>
+            <IconResultSquare key={i} state={tripletSquareState(t)} />
           ))}
         </div>
 
@@ -122,7 +125,7 @@ export default function ResultScreen({
         </div>
 
         <button className={`${styles.shareBtn} ${copied ? styles.copied : ''}`} onClick={handleShare}>
-          {copied ? '✓ Copied to clipboard' : '⬆ Share'}
+          {copied ? <><IconCheckmark /> Copied to clipboard</> : <><IconShare /> Share</>}
         </button>
       </div>
     </div>

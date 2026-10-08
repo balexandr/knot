@@ -1,10 +1,11 @@
+import { IconClose, IconResultSquare } from './Icons';
 import styles from './HowToPlay.module.css';
 
 export default function HowToPlay({ onClose }) {
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.closeBtn} onClick={onClose} aria-label="Close">✕</button>
+        <button className={styles.closeBtn} onClick={onClose} aria-label="Close"><IconClose /></button>
         <h2 className={styles.title}>How to Play</h2>
 
         <p className={styles.intro}>
@@ -34,13 +35,13 @@ export default function HowToPlay({ onClose }) {
         </ul>
 
         <div className={styles.legend}>
-          <span>🟢 First try</span>
-          <span>🟡 Second try</span>
-          <span>🟠 Third try</span>
-          <span>🔴 Missed</span>
+          <span><IconResultSquare state="first" /> First try</span>
+          <span><IconResultSquare state="second" /> Second try</span>
+          <span><IconResultSquare state="third" /> Third try</span>
+          <span><IconResultSquare state="missed" /> Missed</span>
         </div>
 
-        <button className={styles.playBtn} onClick={onClose}>Got it — let's play</button>
+        <button className={styles.playBtn} onClick={onClose}>Got it, let's play</button>
       </div>
     </div>
   );

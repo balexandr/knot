@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { IconXSmall } from './Icons';
 import styles from './TripletCard.module.css';
 
 const SLOT_CLASSES = ['slot0', 'slot1', 'slot2'];
@@ -90,7 +91,7 @@ export default function TripletCard({
           {wrongGuesses.length > 0 && (
             <div className={styles.wrongGuesses}>
               {wrongGuesses.map((g, i) => (
-                <span key={i} className={styles.wrongGuess}>✕ {g}</span>
+                <span key={i} className={styles.wrongGuess}><IconXSmall /> {g}</span>
               ))}
             </div>
           )}

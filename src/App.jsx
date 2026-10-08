@@ -9,6 +9,7 @@ import styles from './App.module.css';
 import { NoodleLogoIcon } from './components/NoodleLogo';
 import { GameLogo } from './components/GameLogo';
 import { recordTodayShare, getCompletedTodayCount, buildShareAllText, TOTAL_GAMES } from './utils/shareAll';
+import { IconCheckmark, IconShare } from './components/Icons';
 
 const HOW_TO_PLAY_KEY = 'knot-how-to-play-seen';
 
@@ -96,7 +97,9 @@ export default function App() {
           className={`${styles.footerShareAll} ${shareAllCopied ? styles.copied : ''}`}
           onClick={handleShareAll}
         >
-          {shareAllCopied ? '✓ Copied' : `⬆ Share all completed (${shareAllCount}/${TOTAL_GAMES})`}
+          {shareAllCopied
+            ? <><IconCheckmark size={13} /> Copied</>
+            : <><IconShare size={13} /> Share all completed ({shareAllCount}/{TOTAL_GAMES})</>}
         </button>
       )}
       <a href="https://noodlegames.co/privacy" target="_blank" rel="noopener noreferrer" className={styles.footerPrivacy}>Privacy Policy</a>
