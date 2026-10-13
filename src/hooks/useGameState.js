@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import puzzles from '../data/puzzles.js';
 
 const STORAGE_KEY = 'knot-game-state';
@@ -56,6 +56,12 @@ export function useGameState() {
   const [gameStatus, setGameStatus] = useState('playing');
   const [initialized, setInitialized] = useState(false);
   const [shakingIdx, setShakingIdx] = useState(null);
+  // Leaderboard tiebreak: solve time, read back only at the instant of a
+  // perfect clear (see toLeaderboardScore's own comment on why this needs
+  // a tiebreak at all). Restarts on a reload mid-puzzle, persisted once a
+  // perfect clear happens so a later reload keeps the real time.
+  const startTimeRef = useRef(null);
+  const [elapsedSecondsAtWin, setElapsedSecondsAtWin] = useState(null);
   // Which triplet is currently open for guessing. Defaults to the first
   // unsolved one, but the player can freely tap into any other unresolved
   // triplet instead — solving order is never enforced.
@@ -70,8 +76,11 @@ export function useGameState() {
       setTripletStates(saved.tripletStates);
       setGameStatus(saved.gameStatus || 'playing');
       setActiveIdxState(firstUnresolvedIdx(saved.tripletStates));
+      setElapsedSecondsAtWin(saved.elapsedSecondsAtWin ?? null);
+      if ((saved.gameStatus || 'playing') === 'playing') startTimeRef.current = performance.now();
     } else {
       setActiveIdxState(firstUnresolvedIdx(makeFreshTripletStates(puzzle.triplets.length)));
+      startTimeRef.current = performance.now();
     }
     setInitialized(true);
   }, [dateKey]);
@@ -95,8 +104,8 @@ export function useGameState() {
 
   useEffect(() => {
     if (!initialized || !puzzle) return;
-    saveState({ dateKey, tripletStates, gameStatus });
-  }, [tripletStates, gameStatus, initialized]);
+    saveState({ dateKey, tripletStates, gameStatus, elapsedSecondsAtWin });
+  }, [tripletStates, gameStatus, elapsedSecondsAtWin, initialized]);
 
   const submitGuess = useCallback((text, tripletIdx) => {
     if (!puzzle || gameStatus !== 'playing') return { result: 'invalid' };
@@ -123,6 +132,11 @@ export function useGameState() {
 
       if (isDone(next)) {
         setGameStatus('done');
+        if (next.every(t => t.solved)) {
+          setElapsedSecondsAtWin(
+            startTimeRef.current ? Math.round((performance.now() - startTimeRef.current) / 1000) : null
+          );
+        }
       }
 
       return next;
@@ -162,6 +176,7 @@ export function useGameState() {
     shakingIdx,
     activeIdx,
     solvedCount,
+    elapsedSecondsAtWin,
     submitGuess,
     selectTriplet,
     generateShareText,

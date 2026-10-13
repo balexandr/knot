@@ -27,6 +27,7 @@ export default function App() {
     shakingIdx,
     activeIdx,
     solvedCount,
+    elapsedSecondsAtWin,
     submitGuess,
     selectTriplet,
     generateShareText,
@@ -71,7 +72,7 @@ export default function App() {
   useEffect(() => {
     if (gameStatus !== 'done' || solvedCount !== puzzle?.triplets.length) return;
     const t = setTimeout(() => {
-      const pending = toLeaderboardScore(tripletStates);
+      const pending = toLeaderboardScore(tripletStates, elapsedSecondsAtWin);
       fetchTodayBoard('knot', dateKey).then((board) => {
         if (!board.config) return;
         if (findMyRow('knot', board.rows)) return;
@@ -219,7 +220,7 @@ export default function App() {
           dateKey={dateKey}
           pendingScore={
             gameStatus === 'done' && solvedCount === puzzle.triplets.length
-              ? toLeaderboardScore(tripletStates)
+              ? toLeaderboardScore(tripletStates, elapsedSecondsAtWin)
               : null
           }
           onClose={() => setShowLeaderboard(false)}
