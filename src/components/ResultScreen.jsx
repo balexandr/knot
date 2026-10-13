@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { IconClose, IconCheckmark, IconShare, IconResultSquare, IconTrophy, IconThumbsUp, IconMoon, IconLeaderboard } from './Icons';
+import { copyToClipboard } from '../utils/shareAll';
 import styles from './ResultScreen.module.css';
 
 function tripletSquareState(tState) {
@@ -46,17 +47,7 @@ export default function ResultScreen({
         // user cancelled the share sheet, or it errored, fall through to copy
       }
     }
-    try {
-      await navigator.clipboard.writeText(shareText);
-    } catch {
-      const ta = document.createElement('textarea');
-      ta.value = shareText;
-      ta.style.cssText = 'position:fixed;opacity:0';
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-    }
+    await copyToClipboard(shareText);
     setCopied(true);
   };
 
