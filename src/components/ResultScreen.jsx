@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { IconClose, IconCheckmark, IconShare, IconResultSquare, IconTrophy, IconThumbsUp, IconMoon } from './Icons';
+import { IconClose, IconCheckmark, IconShare, IconResultSquare, IconTrophy, IconThumbsUp, IconMoon, IconLeaderboard } from './Icons';
 import styles from './ResultScreen.module.css';
 
 function tripletSquareState(tState) {
@@ -19,6 +19,7 @@ export default function ResultScreen({
   stats,
   winPct,
   onDismiss,
+  onViewLeaderboard,
 }) {
   const [copied, setCopied] = useState(false);
   const totalTriplets = puzzle.triplets.length;
@@ -127,6 +128,12 @@ export default function ResultScreen({
         <button className={`${styles.shareBtn} ${copied ? styles.copied : ''}`} onClick={handleShare}>
           {copied ? <><IconCheckmark /> Copied to clipboard</> : <><IconShare /> Share</>}
         </button>
+
+        {won && (
+          <button className={styles.leaderboardBtn} onClick={onViewLeaderboard}>
+            <IconLeaderboard size={16} /> View today's leaderboard
+          </button>
+        )}
       </div>
     </div>
   );
