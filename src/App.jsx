@@ -11,6 +11,7 @@ import { NoodleLogoIcon } from './components/NoodleLogo';
 import { GameLogo } from './components/GameLogo';
 import { recordTodayShare, getCompletedTodayCount, buildShareAllText, TOTAL_GAMES } from './utils/shareAll';
 import { toLeaderboardScore } from './utils/leaderboardScore';
+import { fetchTodayBoard, findMyRow, wouldQualify } from './utils/leaderboard';
 import { IconCheckmark, IconShare, IconLeaderboard } from './components/Icons';
 
 const HOW_TO_PLAY_KEY = 'knot-how-to-play-seen';
@@ -60,6 +61,27 @@ export default function App() {
       const t = setTimeout(() => setShowResult(true), 600);
       return () => clearTimeout(t);
     }
+  }, [gameStatus]);
+
+  // Auto-opens the leaderboard (initials prompt included) a beat after
+  // a qualifying perfect clear, instead of making the player click
+  // "today's leaderboard" to find out they made the cut. Only a
+  // perfect clear (every triplet actually solved, not just resolved)
+  // counts as a win here, same bar useStats.js already uses.
+  useEffect(() => {
+    if (gameStatus !== 'done' || solvedCount !== puzzle?.triplets.length) return;
+    const t = setTimeout(() => {
+      const pending = toLeaderboardScore(tripletStates);
+      fetchTodayBoard('knot', dateKey).then((board) => {
+        if (!board.config) return;
+        if (findMyRow('knot', board.rows)) return;
+        if (wouldQualify(pending.score, board.rows, board.config)) {
+          setShowLeaderboard(true);
+        }
+      });
+    }, 2000);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameStatus]);
 
   useEffect(() => {
